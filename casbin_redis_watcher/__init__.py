@@ -12,5 +12,5 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-from .options import WatcherOptions
-from .watcher import RedisWatcher, new_watcher, new_publish_watcher
+from .options import WatcherOptions  # noqa: F401
+from .watcher import RedisWatcher, new_watcher, new_publish_watcher  # noqa: F401

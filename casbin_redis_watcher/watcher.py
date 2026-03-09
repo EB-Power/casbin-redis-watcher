@@ -38,7 +38,9 @@ class RedisWatcher:
         if option.optional_update_callback:
             self.set_update_callback(option.optional_update_callback)
         else:
-            self.logger.warning("No callback function is set.Use the default callback function.")
+            self.logger.warning(
+                "No callback function is set.Use the default callback function."
+            )
             self.callback = self.default_callback_func
 
         self.options = option
@@ -51,27 +53,39 @@ class RedisWatcher:
         def func():
             with self.mutex:
                 msg = MSG("Update", self.options.local_ID, "", "", "")
-                return self.pub_client.publish(self.options.channel, msg.marshal_binary())
+                return self.pub_client.publish(
+                    self.options.channel, msg.marshal_binary()
+                )
 
         return self.log_record(func)
 
     def update_for_add_policy(self, sec: str, ptype: str, *params: str):
         def func():
             with self.mutex:
-                msg = MSG("UpdateForAddPolicy", self.options.local_ID, sec, ptype, params)
-                return self.pub_client.publish(self.options.channel, msg.marshal_binary())
+                msg = MSG(
+                    "UpdateForAddPolicy", self.options.local_ID, sec, ptype, params
+                )
+                return self.pub_client.publish(
+                    self.options.channel, msg.marshal_binary()
+                )
 
         return self.log_record(func)
 
     def update_for_remove_policy(self, sec: str, ptype: str, *params: str):
         def func():
             with self.mutex:
-                msg = MSG("UpdateForRemovePolicy", self.options.local_ID, sec, ptype, params)
-                return self.pub_client.publish(self.options.channel, msg.marshal_binary())
+                msg = MSG(
+                    "UpdateForRemovePolicy", self.options.local_ID, sec, ptype, params
+                )
+                return self.pub_client.publish(
+                    self.options.channel, msg.marshal_binary()
+                )
 
         return self.log_record(func)
 
-    def update_for_remove_filtered_policy(self, sec: str, ptype: str, field_index: int, *params: str):
+    def update_for_remove_filtered_policy(
+        self, sec: str, ptype: str, field_index: int, *params: str
+    ):
         def func():
             with self.mutex:
                 msg = MSG(
@@ -81,7 +95,9 @@ class RedisWatcher:
                     ptype,
                     f"{field_index} {' '.join(params)}",
                 )
-                return self.pub_client.publish(self.options.channel, msg.marshal_binary())
+                return self.pub_client.publish(
+                    self.options.channel, msg.marshal_binary()
+                )
 
         return self.log_record(func)
 
@@ -95,7 +111,9 @@ class RedisWatcher:
                     "",
                     model.to_text(),
                 )
-                return self.pub_client.publish(self.options.channel, msg.marshal_binary())
+                return self.pub_client.publish(
+                    self.options.channel, msg.marshal_binary()
+                )
 
         return self.log_record(func)
 
@@ -146,7 +164,9 @@ class MSG:
 def new_watcher(option: WatcherOptions):
     option.init_config()
     w = RedisWatcher()
-    rds = Redis(host=option.host, port=option.port, password=option.password, ssl=option.ssl)
+    rds = Redis(
+        host=option.host, port=option.port, password=option.password, ssl=option.ssl
+    )
     if rds.ping() is False:
         raise Exception("Redis server is not available.")
     w.sub_client = rds.client().pubsub()
@@ -161,7 +181,9 @@ def new_watcher(option: WatcherOptions):
 def new_publish_watcher(option: WatcherOptions):
     option.init_config()
     w = RedisWatcher()
-    rds = Redis(host=option.host, port=option.port, password=option.password, ssl=option.ssl)
+    rds = Redis(
+        host=option.host, port=option.port, password=option.password, ssl=option.ssl
+    )
     if rds.ping() is False:
         raise Exception("Redis server is not available.")
     w.pub_client = rds.client()

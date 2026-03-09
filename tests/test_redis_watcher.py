@@ -32,7 +32,9 @@ class TestConfig(TestCase):
         test_option = WatcherOptions()
         test_option.host = "localhost"
         test_option.port = "6379"
-        test_option.optional_update_callback = lambda event: print("update callback, event: {}".format(event))
+        test_option.optional_update_callback = lambda event: print(
+            "update callback, event: {}".format(event)
+        )
         w = new_watcher(test_option)
         assert isinstance(w.sub_client, redis.client.PubSub)
         assert isinstance(w.pub_client, redis.client.Redis)
@@ -41,7 +43,9 @@ class TestConfig(TestCase):
         test_option = WatcherOptions()
         test_option.host = "localhost"
         test_option.port = "6379"
-        test_option.optional_update_callback = lambda event: print("update callback, event: {}".format(event))
+        test_option.optional_update_callback = lambda event: print(
+            "update callback, event: {}".format(event)
+        )
         w = new_publish_watcher(test_option)
         assert w.sub_client is None
         assert isinstance(w.pub_client, redis.client.Redis)
@@ -189,7 +193,9 @@ class TestConfig(TestCase):
         test_option.optional_update_callback = callback_function
         w = new_watcher(test_option)
 
-        e = casbin.Enforcer(get_examples("rbac_model.conf"), get_examples("rbac_policy.csv"))
+        e = casbin.Enforcer(
+            get_examples("rbac_model.conf"), get_examples("rbac_policy.csv")
+        )
         e.set_watcher(w)
         assert callback_flag is False
         e.save_policy()
