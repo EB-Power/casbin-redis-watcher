@@ -18,7 +18,7 @@ classifiers = [
 requires-python = ">=3.10"
 dependencies = [
     "casbin>=1.18.0",
-    "redis==4.5.2",
+    "redis>=4.5.2,<8",
 ]
 
 [project.urls]

@@ -41,7 +41,7 @@ dev = [
 [package.metadata]
 requires-dist = [
     { name = "casbin", specifier = ">=1.18.0" },
-    { name = "redis", specifier = "==4.5.2" },
+    { name = "redis", specifier = ">=4.5.2,<8" },
 ]
 
 [package.metadata.requires-dev]
@@ -259,14 +259,14 @@ wheels = [
 
 [[package]]
 name = "redis"
-version = "4.5.2"
+version = "7.3.0"
 source = { registry = "https://pypi.org/simple" }
 dependencies = [
-    { name = "async-timeout", marker = "python_full_version < '3.11'" },
+    { name = "async-timeout", marker = "python_full_version < '3.11.3'" },
 ]
-sdist = { url = "https://files.pythonhosted.org/packages/aa/9a/3e1ab0bcb17e2fd62d34a0ddf7113eac006bc5bd13ecd20318d0c99749c7/redis-4.5.2.tar.gz", hash = "sha256:d8ae1a4f725eea6e3958411870fdf944c587b00ea12be28d3bd5575d8f26430c", size = 4550726, upload-time = "2023-03-20T10:01:56.49Z" }
+sdist = { url = "https://files.pythonhosted.org/packages/da/82/4d1a5279f6c1251d3d2a603a798a1137c657de9b12cfc1fba4858232c4d2/redis-7.3.0.tar.gz", hash = "sha256:4d1b768aafcf41b01022410b3cc4f15a07d9b3d6fe0c66fc967da2c88e551034", size = 4928081, upload-time = "2026-03-06T18:18:16.287Z" }
 wheels = [
-    { url = "https://files.pythonhosted.org/packages/1f/ec/a64e0e8d74c68eef15aac1cb88737f7c023cd8342340ef52e1d2fe3b30ff/redis-4.5.2-py3-none-any.whl", hash = "sha256:4b12b3a1e9bfb43dc533330ec6d142329d0c27ea6bb6716a9d0389e8f2038a4e", size = 238490, upload-time = "2023-03-20T10:01:54.026Z" },
+    { url = "https://files.pythonhosted.org/packages/f0/28/84e57fce7819e81ec5aa1bd31c42b89607241f4fb1a3ea5b0d2dbeaea26c/redis-7.3.0-py3-none-any.whl", hash = "sha256:9d4fcb002a12a5e3c3fbe005d59c48a2cc231f87fbb2f6b70c2d89bb64fec364", size = 404379, upload-time = "2026-03-06T18:18:14.583Z" },
 ]
 
 [[package]]
