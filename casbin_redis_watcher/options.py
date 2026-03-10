@@ -26,6 +26,7 @@ class WatcherOptions:
     ignore_self = None
     local_ID = None
     optional_update_callback = None
+    cluster = False
 
     def init_config(self):
 

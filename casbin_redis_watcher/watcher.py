@@ -18,6 +18,7 @@ from threading import Thread, Lock, Event
 
 from casbin.model import Model
 from redis.client import Redis, PubSub
+from redis import RedisCluster
 
 from casbin_redis_watcher.options import WatcherOptions
 
@@ -165,24 +166,42 @@ def new_watcher(option: WatcherOptions):
     option.init_config()
     w = RedisWatcher()
 
-    w.pub_client = Redis(
-        host=option.host,
-        port=int(option.port),
-        password=option.password,
-        ssl=option.ssl,
-        decode_responses=True,
-    )
+    if option.cluster:
+        w.pub_client = RedisCluster(
+            host=option.host,
+            port=int(option.port),
+            password=option.password,
+            ssl=option.ssl,
+            decode_responses=True,
+        )
+    else:
+        w.pub_client = Redis(
+            host=option.host,
+            port=int(option.port),
+            password=option.password,
+            ssl=option.ssl,
+            decode_responses=True,
+        )
 
     if not w.pub_client.ping():
         raise Exception("Redis server is not available.")
 
-    w.sub_client = Redis(
-        host=option.host,
-        port=int(option.port),
-        password=option.password,
-        ssl=option.ssl,
-        decode_responses=True,
-    ).pubsub(ignore_subscribe_messages=True)
+    if option.cluster:
+        w.sub_client = RedisCluster(
+            host=option.host,
+            port=int(option.port),
+            password=option.password,
+            ssl=option.ssl,
+            decode_responses=True,
+        ).pubsub(ignore_subscribe_messages=True)
+    else:
+        w.sub_client = Redis(
+            host=option.host,
+            port=int(option.port),
+            password=option.password,
+            ssl=option.ssl,
+            decode_responses=True,
+        ).pubsub(ignore_subscribe_messages=True)
 
     w.init_config(option)
     w.close = False
@@ -196,13 +215,22 @@ def new_publish_watcher(option: WatcherOptions):
     option.init_config()
     w = RedisWatcher()
 
-    w.pub_client = Redis(
-        host=option.host,
-        port=int(option.port),
-        password=option.password,
-        ssl=option.ssl,
-        decode_responses=True,
-    )
+    if option.cluster:
+        w.pub_client = RedisCluster(
+            host=option.host,
+            port=int(option.port),
+            password=option.password,
+            ssl=option.ssl,
+            decode_responses=True,
+        )
+    else:
+        w.pub_client = Redis(
+            host=option.host,
+            port=int(option.port),
+            password=option.password,
+            ssl=option.ssl,
+            decode_responses=True,
+        )
 
     if not w.pub_client.ping():
         raise Exception("Redis server is not available.")
